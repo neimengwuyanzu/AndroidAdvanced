@@ -1,10 +1,8 @@
-package com.example.androidadvanced.ui;
+package com.example.customview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
-import com.example.androidadvanced.R;
 
 public class MainActivity extends AppCompatActivity {
 

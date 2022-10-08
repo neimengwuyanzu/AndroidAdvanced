@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidadvanced.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
@@ -19,10 +20,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
     private List<String> mList;
     private Context context;
     private OnItemClickListener onItemClickListener;
+    private List<Integer> mHeight;
+    private boolean isWF;
 
     public HomeAdapter(Context context,List<String> mList){
         this.context = context;
         this.mList = mList;
+
     }
 
     public void removeData(int position){
@@ -48,6 +52,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(MyViewHolder holder,int position) {
+        if (isWF) {
+            //给每一个item设置高度
+            ViewGroup.LayoutParams lp = holder.tv.getLayoutParams();
+            lp.height = mHeight.get(position);
+            holder.tv.setLayoutParams(lp);
+        }
         holder.tv.setText(mList.get(position));
         holder.position =position;
     }
@@ -57,6 +67,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
         return mList.size();
     }
 
+    /**
+     * 设置是否使用瀑布流
+     * 得后续搞一下
+     */
+    public void setWaterfallFlow() {
+        isWF = true;
+        mHeight = new ArrayList<>();
+        for (int i = 0; i < mList.size(); i++) {
+            mHeight.add((int) (100+Math.random() * 300));
+        }
+    }
 
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

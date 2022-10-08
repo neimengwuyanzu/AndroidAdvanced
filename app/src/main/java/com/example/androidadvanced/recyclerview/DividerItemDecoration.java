@@ -1,4 +1,4 @@
-package com.example.androidadvanced.weight;
+package com.example.androidadvanced.recyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -41,7 +41,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == VERTICAL_LIST) {
             drawVertical(c, parent);
-        } else {
+        } else{
             drawHorizontal(c, parent);
         }
     }

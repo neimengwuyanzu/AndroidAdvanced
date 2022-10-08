@@ -1,10 +1,11 @@
-package com.example.androidadvanced.ui;
+package com.example.androidadvanced.recyclerview;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.androidadvanced.R;
 import com.example.androidadvanced.recyclerview.adapter.HomeAdapter;
-import com.example.androidadvanced.weight.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +35,20 @@ public class RecyclerTestActivity extends AppCompatActivity {
         for (int i = 0; i < 30; i++) {
             list.add(String.valueOf(i));
         }
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(RecyclerTestActivity.this, DividerItemDecoration.VERTICAL_LIST));
-
         adapter = new HomeAdapter(this, list);
+        //纵向列表
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(RecyclerTestActivity.this, DividerItemDecoration.VERTICAL_LIST));
+        //格子列表
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(RecyclerTestActivity.this,DividerItemDecoration.HORIZONTAL_LIST));
+        //瀑布流
+//        adapter.setWaterfallFlow();
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(RecyclerTestActivity.this, DividerItemDecoration.VERTICAL_LIST));
+
+
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new HomeAdapter.OnItemClickListener() {
