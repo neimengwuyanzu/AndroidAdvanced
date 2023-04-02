@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true">
+<!--  试了试代码 fromX/YDelta 起始坐标 -->
+<!--            toX/YDelta 结束坐标 -->
+<!--            duration 动画时间 -->
+    <translate
+        android:duration="1000"
+        android:fromXDelta="-1000"
+        android:fromYDelta="-1000"
+        android:toXDelta="1000"
+        android:toYDelta="1000"/>
+</set>

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Scroller;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,6 +15,7 @@ public class CustomView extends View {
 
     private int lastX;
     private int lastY;
+    private Scroller scroller;
 
     public CustomView(Context context) {
         super(context);
@@ -21,10 +23,27 @@ public class CustomView extends View {
 
     public CustomView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        scroller = new Scroller(context);
     }
 
     public CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public void computeScroll() {
+        super.computeScroll();
+        if (scroller.computeScrollOffset()){
+            ((View)getParent()).scrollTo(scroller.getCurrX(),scroller.getCurrY());
+            invalidate();
+        }
+    }
+
+    public void smoothScrollTo(int destX,int destY){
+        int scrollX = getScrollX();
+        int delta = destX-scrollX;
+        scroller.startScroll(scrollX,0,delta,0,2000);
+        invalidate();
     }
 
     @Override
@@ -38,6 +57,7 @@ public class CustomView extends View {
                 lastX = x;
                 lastY = y;
                 break;
+
             case MotionEvent.ACTION_MOVE:
                 //计算移动的距离   X/Y为手指当前的坐标  lastX/Y 为手指摁下时候的坐标
                 int offsetX = x - lastX;
@@ -67,12 +87,17 @@ public class CustomView extends View {
 
 
                 //这个也是移动控件的方法 但是用起来奇奇怪怪的
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
-                layoutParams.leftMargin = getLeft()+ offsetX;
-                layoutParams.rightMargin = getRight()+ offsetX;
-                layoutParams.topMargin = getTop()+ offsetY;
-                layoutParams.bottomMargin = getBottom()+ offsetY;
-                setLayoutParams(layoutParams);
+//                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
+//                layoutParams.leftMargin = getLeft()+ offsetX;
+//                layoutParams.rightMargin = getRight()+ offsetX;
+//                layoutParams.topMargin = getTop()+ offsetY;
+//                layoutParams.bottomMargin = getBottom()+ offsetY;
+//                setLayoutParams(layoutParams);
+
+                /**
+                 * scrollBy 表示移动到的增量为dx，dy
+                 */
+                ((View)getParent()).scrollBy(-offsetX,-offsetY);
 
                 Log.d("zyzyzy", " X = " + x);
                 Log.d("zyzyzy", " Y = " + y);

@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "AndroidAdvanced"
 include ':app'
 include ':customview'
+include ':rxjavademo'
