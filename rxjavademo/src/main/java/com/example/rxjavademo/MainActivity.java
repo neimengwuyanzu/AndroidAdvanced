@@ -24,6 +24,8 @@ import io.reactivex.rxjava3.subjects.UnicastSubject;
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "zyzyzy";
+    private Observer<String> mObserver;
+    private Observable mObservable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +160,16 @@ public class MainActivity extends AppCompatActivity {
         CompletableSubject completableSubject = CompletableSubject.create();
         completableSubject.onComplete();
 
+
+        /**
+         * 用Observer订阅Subject
+         */
+//        replaySubject.subscribe(mObserver);
+        /**
+         * 用subject订阅一个Observable
+         */
+//        mObservable.subscribe(subject);
+//        subject.subscribe(mObserver);
     }
 
     private void initRxJava() {
@@ -165,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 观察者对象
          */
-        Observer<String> observer = new Observer<String>() {
+        mObserver = new Observer<String>() {
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -198,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
          * 创建被观察者并添加事件到任务队列
          */
 
-        Observable observable = Observable.create(new ObservableOnSubscribe<String>() {
+        mObservable = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Throwable {
                 /**
