@@ -32,3 +32,16 @@
 
 - 今天晚上突发奇想把之前工作中遇到的一个问题解决了 就是用android源生数据库存储list结构的实体类的事儿
 
+
+## 2023年4月9日 18:08:35
+
+    今天把操作符看完了  有点乱 因为分类有八大类 等后续打算面试的时候每个抓几个看看
+    记录一下今天看到的线程控制
+
+- Schedulers.newThread();  总是启用新线程 并且在新线程中执行操作
+- Schedulers.io();         I/O操作（读写文件/，读/写数据库 网络信息交互等）所使用的Schedulers 行为模式和Schedulers.newThread()差不多，区别是io()内部实现采用的事一个无数量上限的线程池，并且可以重用空闲的线程，因此多数情况下io()比newThread()更有效率
+- Schedulers.computation(); 计算所使用的Scheduler，比如图形计算。这个Scheduler使用的是固定线程池，大小为CPU的核数。不要把I/O操作放在computation()中，否则I/O操作的等待时间会浪费CPU，它是buffer，debounce，delay，interval，sample和skip操作符的默认调度器
+- Scheduler.trampoline(); 当我们想在当前线程中执行一个任务时，并未立即执行，可以用trampoline()将它插入队列。这个新插入队列的任务会立即执行。如果当前队列有任务正在执行，则会将这个任务暂停，等待新插入的任务执行完毕后再执行该任务
+- Scheduler.single(); 拥有一个线程单例，所有任务都在这个线程中执行
+- AndroidScheduler.mainThread(); RxAndroid库提供的Scheduler，它指定的操作在主线程中运行
+
