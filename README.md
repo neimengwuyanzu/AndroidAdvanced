@@ -45,3 +45,8 @@
 - Scheduler.single(); 拥有一个线程单例，所有任务都在这个线程中执行
 - AndroidScheduler.mainThread(); RxAndroid库提供的Scheduler，它指定的操作在主线程中运行
 
+## 2023年4月10日 02:07:26
+
+    用rxjava3+retrofit+okhttp3 logging 写了一个网络请求工具 请求通了 但是不太好用 回头看看这个思路 如果有兴趣就参照别人项目用的搞一个
+    rxjava算是看完了 明天考虑一下继续第三方还是开始kotlin
+

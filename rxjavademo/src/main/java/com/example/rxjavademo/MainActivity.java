@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.rxjavademo.bean.Swordsman;
+import com.example.rxjavademo.bean.WanArticle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,35 @@ public class MainActivity extends AppCompatActivity {
 
 //        initRxJava();
 //        initSubject();
-        initOperator();
+//        initOperator();
+        initRetrofit();
+    }
+
+    @SuppressLint("CheckResult")
+    private void initRetrofit() {
+        HttpUtils.getInstance().create(ApiService.class)
+                .flatMap(new Function<ApiService, ObservableSource<WanArticle>>() {
+
+                    @Override
+                    public ObservableSource<WanArticle> apply(ApiService apiService) throws Throwable {
+                        return apiService.getData();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<WanArticle>() {
+                    @Override
+                    public void accept(WanArticle wanArticle) throws Throwable {
+                        //处理请求结果
+                        Log.d(TAG, "accept: " + wanArticle);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        // 处理请求异常
+                        throwable.getLocalizedMessage();
+                    }
+                });
     }
 
     /**
