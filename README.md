@@ -50,3 +50,35 @@
     用rxjava3+retrofit+okhttp3 logging 写了一个网络请求工具 请求通了 但是不太好用 回头看看这个思路 如果有兴趣就参照别人项目用的搞一个
     rxjava算是看完了 明天考虑一下继续第三方还是开始kotlin
 
+## 2023年4月10日 23:14:18
+
+    晚上没写代码 打算继续看第三方控件 今晚看了Retrofit的使用和源码解析
+
+- 书里用的是2.1.0版本 我用的是2.9.0版本 所以源码跟书里有一些出入
+- Retrofit主要是用注解的方式来定义请求方式
+    - @Path 这个是用来动态拼接请求地址的 调用getUrl("www") 请求的地址就是www.baidu.com
+    ```java 
+    @GET("{ path }.baidu.com")
+    Call<Model> getUrl(@Path("path") String path);
+    ```
+     - @Query     这个就是动态指定查询条件的 
+     - @QueryMap  这个就是传入多个查询参数
+
+     - @FromUrlEncoded 这个是标明这是一个表单请求
+     - @Field 这个是POST里添加键值对请求参数的
+
+     - @Body 这个是用POST方式将JSON字符串作为请求体发送到服务器
+     - @Part 这个是单个文件上传
+     - @PartMap 多个文件上传
+     - @Multipart 表示允许多个@Part
+     - @Headers 添加多个报头
+     - @Header 动态添加单个报头
+
+- 源码这个看的有点笼统 
+    - Retrofit 是通过建造者模式构建出来的
+    - 2.1.0看源码可以支持java ios android 通过不同的平台返回不同的线程池
+    - 2.1.9版本我看源码策略好像不一样了
+
+- 打算写Dagger2的demo  但是运行不起来 明天再看看
+
+
